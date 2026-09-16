@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow">
 
   <title>Phishing Simulation Awareness Notice</title>
 
@@ -117,19 +116,16 @@
       margin-bottom: 2rem;
     }
 
-    .logo-placeholder {
-      width: 76px;
+    /* Logo container — white background so the 2C (two-color) logo
+       displays cleanly against the navy header background. */
+    .college-logo {
+      width: 120px;
       height: 76px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      text-align: center;
-      line-height: 1.2;
+      object-fit: contain;
+      background: #ffffff;
+      border-radius: 12px;
       padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.32);
       flex: 0 0 auto;
     }
 
@@ -466,13 +462,14 @@
 
       <header>
         <div class="brand-row">
-          <!-- Replace this placeholder with your official college logo if approved.
-               Example:
-               <img src="logo.png" alt="Texas State Technical College logo" class="college-logo">
-          -->
-          <div class="logo-placeholder" aria-label="College logo placeholder">
-            Logo<br />Here
-          </div>
+          <!-- Official TSTC Primary Logo (Two-Color version).
+               Ensure the image file is uploaded to your repository at the same
+               path as index.html, or update the src to match your folder structure. -->
+          <img
+            src="TSTC%20Primary%20Logo%202C.jpg"
+            alt="Texas State Technical College logo"
+            class="college-logo"
+          />
 
           <div class="brand-text">
             <span class="college-name">Texas State Technical College</span>
@@ -541,7 +538,7 @@
                 <span class="number-badge" aria-hidden="true">3</span>
                 <span>
                   <strong>Report suspicious messages.</strong><br />
-                  Use the college’s approved reporting process.
+                  Use the college's approved reporting process.
                 </span>
               </li>
             </ul>
@@ -616,7 +613,7 @@
           <ol>
             <li>Do not click additional links or open unexpected attachments.</li>
             <li>Do not enter your username, password, MFA code, student ID, employee ID, or other sensitive information.</li>
-            <li>Report the message using your college’s approved reporting method.</li>
+            <li>Report the message using your college's approved reporting method.</li>
             <li>If you believe you entered credentials on a real suspicious site, contact the <strong>Office of Information Technology</strong> immediately.</li>
           </ol>
 
