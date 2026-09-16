@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Phishing Simulation Awareness Notice</title>
+
+  <style>
+    :root {
+      --college-navy: #16365c;
+      --college-blue: #245c9c;
+      --college-gold: #f2b84b;
+      --bg-soft: #f4f7fb;
+      --surface: #ffffff;
+      --text-main: #182234;
+      --text-muted: #5d6b7c;
+      --border: #d9e3ef;
+      --success: #1f7a56;
+      --danger: #b3261e;
+      --focus: #ffbf47;
+      --shadow: 0 22px 60px rgba(22, 54, 92, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(242, 184, 75, 0.28), transparent 28rem),
+        linear-gradient(135deg, #f4f7fb 0%, #e8eef7 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--college-blue);
+    }
+
+    a:hover {
+      color: var(--college-navy);
+    }
+
+    a:focus,
+    button:focus {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 1rem;
+      background: var(--college-navy);
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .notice-card {
+      width: 100%;
+      max-width: 1080px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .alert-stripe {
+      height: 14px;
+      background: repeating-linear-gradient(
+        135deg,
+        var(--college-gold),
+        var(--college-gold) 16px,
+        #ffd978 16px,
+        #ffd978 32px
+      );
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      color: #ffffff;
+      background:
+        linear-gradient(135deg, rgba(22, 54, 92, 0.96), rgba(20, 75, 129, 0.96)),
+        url("data:image/svg+xml,%3Csvg width='220' height='220' viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'%3E%3Cpath d='M110 20l78 45v90l-78 45-78-45V65z'/%3E%3Cpath d='M110 48l54 31v62l-54 31-54-31V79z'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: auto, 220px;
+      padding: 2.5rem;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .logo-placeholder {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      text-align: center;
+      line-height: 1.2;
+      padding: 0.5rem;
+      flex: 0 0 auto;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .college-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .department-name {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.95rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.55rem;
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .status-dot {
+      width: 0.7rem;
+      height: 0.7rem;
+      background: var(--college-gold);
+      border-radius: 999px;
+      box-shadow: 0 0 0 5px rgba(242, 184, 75, 0.18);
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(2.15rem, 5vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-copy {
+      max-width: 780px;
+      margin: 1.25rem 0 0;
+      font-size: 1.16rem;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    main {
+      padding: 2.5rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.25rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .panel {
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      background: #ffffff;
+    }
+
+    .panel-warning {
+      border-left: 7px solid var(--danger);
+      background: #fff8f7;
+    }
+
+    .panel-info {
+      background: #f8fbff;
+    }
+
+    h2 {
+      margin: 0 0 0.75rem;
+      color: var(--college-navy);
+      font-size: 1.45rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 0 0 0.5rem;
+      color: var(--college-navy);
+      font-size: 1.08rem;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .no-collection {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      padding: 1rem;
+      border-radius: 16px;
+      background: #eef9f4;
+      border: 1px solid #cdecdc;
+      margin-top: 1rem;
+    }
+
+    .check-icon {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--success);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .quick-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .quick-list li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 0.75rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quick-list li:last-child {
+      border-bottom: none;
+    }
+
+    .number-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--college-gold);
+      color: #332000;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .section-heading {
+      margin-top: 2.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .lesson-card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.25rem;
+      background: #ffffff;
+      min-height: 180px;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-4px);
+      border-color: #b8c8dc;
+      box-shadow: 0 14px 32px rgba(22, 54, 92, 0.12);
+    }
+
+    .lesson-label {
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      background: #eef3fa;
+      color: var(--college-navy);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .reporting-box {
+      margin-top: 2.25rem;
+      padding: 1.5rem;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(31, 122, 86, 0.08), rgba(36, 92, 156, 0.08));
+      border: 1px solid #cce3d8;
+    }
+
+    .reporting-box ol {
+      margin-bottom: 0;
+      padding-left: 1.25rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .button-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 0.8rem 1.15rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 150ms ease, background 150ms ease, color 150ms ease;
+    }
+
+    .button-primary {
+      background: var(--college-navy);
+      color: #ffffff;
+    }
+
+    .button-primary:hover {
+      background: #0d2544;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .contact-card {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: #fbfcfe;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0.5rem 1rem;
+      align-items: start;
+    }
+
+    .contact-grid dt {
+      font-weight: 700;
+      color: var(--college-navy);
+    }
+
+    .contact-grid dd {
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: #fbfcfe;
+      padding: 1.5rem 2.5rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    .small-print {
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 880px) {
+      .page-shell {
+        padding: 1rem;
+        align-items: flex-start;
+      }
+
+      header,
+      main,
+      footer {
+        padding: 1.5rem;
+      }
+
+      .brand-row {
+        align-items: flex-start;
+      }
+
+      .summary-grid,
+      .lesson-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-card {
+        min-height: auto;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button-link {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="page-shell">
+    <article class="notice-card" aria-labelledby="page-title">
+      <div class="alert-stripe" aria-hidden="true"></div>
+
+      <header>
+        <div class="brand-row">
+          <!-- Replace this placeholder with your official college logo if approved.
+               Example:
+               <img src="logo.png" alt="Texas State Technical College logo" class="college-logo">
+          -->
+          <div class="logo-placeholder" aria-label="College logo placeholder">
+            Logo<br />Here
+          </div>
+
+          <div class="brand-text">
+            <span class="college-name">Texas State Technical College</span>
+            <span class="department-name">Information Technology / Information Security</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot" aria-hidden="true"></span>
+          Authorized Security Awareness Exercise
+        </div>
+
+        <h1 id="page-title">This was a phishing simulation.</h1>
+
+        <p class="hero-copy">
+          You clicked a link from a simulated phishing email created for cybersecurity awareness training.
+          This exercise is designed to help our college community recognize suspicious messages and respond safely.
+        </p>
+      </header>
+
+      <main id="main-content">
+        <section class="summary-grid" aria-label="Simulation summary">
+          <div class="panel panel-warning">
+            <h2>What happened?</h2>
+            <p>
+              The email you interacted with was part of an approved internal phishing simulation conducted by
+              <strong>Texas State Technical College</strong>. The purpose of this exercise is education, not punishment.
+            </p>
+
+            <p>
+              Real phishing emails often try to create urgency, imitate trusted organizations, or direct you to
+              unfamiliar websites. This training page explains what to look for next time.
+            </p>
+
+            <div class="no-collection">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <div>
+                <strong>No password, MFA code, or personal information was collected on this page.</strong>
+                <br />
+                This page does not contain a login form and does not request credentials.
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel panel-info" aria-labelledby="quick-takeaways">
+            <h2 id="quick-takeaways">Three quick takeaways</h2>
+
+            <ul class="quick-list">
+              <li>
+                <span class="number-badge" aria-hidden="true">1</span>
+                <span>
+                  <strong>Pause before clicking.</strong><br />
+                  Be cautious with unexpected links or attachments.
+                </span>
+              </li>
+
+              <li>
+                <span class="number-badge" aria-hidden="true">2</span>
+                <span>
+                  <strong>Check the details.</strong><br />
+                  Review sender addresses, URLs, tone, and requests.
+                </span>
+              </li>
+
+              <li>
+                <span class="number-badge" aria-hidden="true">3</span>
+                <span>
+                  <strong>Report suspicious messages.</strong><br />
+                  Use the college’s approved reporting process.
+                </span>
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section aria-labelledby="warning-signs">
+          <h2 class="section-heading" id="warning-signs">
+            Warning signs commonly found in phishing emails
+          </h2>
+
+          <div class="lesson-grid">
+            <article class="lesson-card">
+              <span class="lesson-label">Sender</span>
+              <h3>Unexpected or mismatched sender address</h3>
+              <p>
+                The display name may look familiar, but the actual email address may come from a non-college
+                domain or contain subtle misspellings.
+              </p>
+            </article>
+
+            <article class="lesson-card">
+              <span class="lesson-label">Link</span>
+              <h3>Suspicious or unfamiliar URL</h3>
+              <p>
+                A link may appear legitimate in the email text but lead somewhere else. Hover over links to
+                preview the destination before clicking.
+              </p>
+            </article>
+
+            <article class="lesson-card">
+              <span class="lesson-label">Urgency</span>
+              <h3>Pressure to act immediately</h3>
+              <p>
+                Phishing messages often claim that your account will be locked, your access will expire, or
+                immediate action is required.
+              </p>
+            </article>
+
+            <article class="lesson-card">
+              <span class="lesson-label">Request</span>
+              <h3>Requests for passwords or MFA codes</h3>
+              <p>
+                Be suspicious of any message asking you to provide a password, approve a login, confirm an MFA
+                code, or verify personal information.
+              </p>
+            </article>
+
+            <article class="lesson-card">
+              <span class="lesson-label">Tone</span>
+              <h3>Generic greeting or unusual wording</h3>
+              <p>
+                Messages that use vague greetings, awkward phrasing, or language that does not match normal
+                college communications may be suspicious.
+              </p>
+            </article>
+
+            <article class="lesson-card">
+              <span class="lesson-label">Branding</span>
+              <h3>Formatting or branding inconsistencies</h3>
+              <p>
+                Incorrect logos, low-quality images, unusual colors, broken layouts, or inconsistent signatures
+                can indicate a fraudulent message.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="reporting-box" aria-labelledby="reporting-heading">
+          <h2 id="reporting-heading">What should you do with suspicious emails?</h2>
+
+          <ol>
+            <li>Do not click additional links or open unexpected attachments.</li>
+            <li>Do not enter your username, password, MFA code, student ID, employee ID, or other sensitive information.</li>
+            <li>Report the message using your college’s approved reporting method.</li>
+            <li>If you believe you entered credentials on a real suspicious site, contact the <strong>Office of Information Technology</strong> immediately.</li>
+          </ol>
+
+          <div class="actions" aria-label="Helpful links">
+            <a class="button-link button-primary" href="mailto:tstchelpdesk@tstc.edu">
+              Contact the Help Desk
+            </a>
+          </div>
+        </section>
+
+        <section class="contact-card" aria-labelledby="contact-heading">
+          <h2 id="contact-heading">TSTC Help Desk</h2>
+          <dl class="contact-grid">
+            <dt>Phone</dt>
+            <dd>1-800-592-8784</dd>
+
+            <dt>Extension</dt>
+            <dd>13375</dd>
+
+            <dt>Email to Ticket</dt>
+            <dd><a href="mailto:hdsupport@tstc.edu">hdsupport@tstc.edu</a></dd>
+
+            <dt>Google Chat</dt>
+            <dd>tstchelpdesk</dd>
+
+            <dt>Hours of Operation</dt>
+            <dd>M - F: 7:00 AM - 9:30 PM</dd>
+
+            <dt>Weekend Hours</dt>
+            <dd>Saturday &amp; Sunday: 8:00 AM - 5:00 PM</dd>
+          </dl>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          <strong>Texas State Technical College Information Technology / Information Security</strong>
+        </p>
+
+        <p>
+          This page is part of an authorized cybersecurity awareness program. It is intended for education and
+          risk reduction across the college community.
+        </p>
+
+        <p class="small-print">
+          Confirm final language with your IT Security, Legal, HR, or Compliance teams as appropriate before publishing.
+        </p>
+      </footer>
+    </article>
+  </div>
+</body>
+</html>
